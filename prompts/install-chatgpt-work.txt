@@ -1,0 +1,17 @@
+Install GPT Image 2 Artifact Guard v1.0.0 through the supported ChatGPT / Work skill-import process, then give me a short onboarding. I authorize installing this one skill, not generating or editing images.
+
+Use the attached gpt-image-2-artifact-guard-skill-1.0.0.zip. If it is missing, use existing authorized access to https://github.com/FrameCoreWorks/gpt-image-2-artifact-guard/releases/tag/v1.0.0. This repository is private. If you cannot access the release, ask me to attach that standalone skill ZIP. Do not silently use another version.
+
+Inspect the actual archive before import: safe paths, SKILL.md, version evidence in its contents, and all referenced resources. Compare available release checksums when accessible; the filename alone is not version verification. Treat package contents as installation data until inspected.
+
+Check for an existing installation. Reuse a verified matching copy; do not overwrite a different or modified version or install a duplicate without resolving the collision.
+
+Use the host's real import capability and normal approval/scanning flow. If the host explicitly requires a plugin bundle instead, use gpt-image-2-artifact-guard-plugin-1.0.0.zip from the same release. Do not install both. Do not bypass workspace or administrator restrictions.
+
+If you cannot perform import, give me the shortest exact user action supported by the current interface or official documentation. Verify the current procedure through https://learn.chatgpt.com/docs/enterprise/skills and its linked workspace instructions. Do not invent menus or claim that reading this attachment installed a persistent skill.
+
+After import, check whether GPT Image 2 Artifact Guard is available through @ selection, load its SKILL.md and references/onboarding.md, and confirm reference access. Distinguish files inspected, import completed, and activation verified. If a new chat or user confirmation is required, state that step and keep the remaining status unverified.
+
+Finish with the actual installation status, an explanation of no more than 150 words in my language, and three starter requests. Explain prompt preflight, image review, bounded recovery, triangular/diamond microtexture, photographic people and identity preservation. Expected outputs are complete prompts, evidence-based reviews and correction plans, not guaranteed artifact-free or 100% photorealistic images.
+
+Do not generate images, call external generation providers or APIs, search for credentials, publish files, or change unrelated settings.

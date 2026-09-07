@@ -1,18 +1,18 @@
 {
   "name": "gpt-image-2-artifact-guard",
-  "version": "0.1.0",
-  "description": "Instruction-only preflight, visual QA, and bounded recovery for GPT Image 2 texture artifacts.",
+  "version": "1.0.0",
+  "description": "Prompt preflight, visual review, and bounded recovery for GPT Image 2 microtexture and photographic people.",
   "author": {
     "name": "FrameCore Works"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "GPT Image 2 Artifact Guard",
-    "shortDescription": "Reduce artifact risks while preserving intended texture.",
-    "longDescription": "Review image prompts and visible outputs, preserve intended detail, and plan limited recovery attempts. Instruction-only: no API, uploads, or background generation. Mitigation is not a guarantee.",
+    "shortDescription": "Check artifacts and photographic realism; preserve detail.",
+    "longDescription": "Onboard, prepare prompts, inspect triangular/checker microtexture and unnatural photographic people, and plan bounded recovery while preserving identity and intended detail. Instruction-only; ready to test, not a proven artifact-removal filter.",
     "developerName": "FrameCore Works",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use $gpt-image-2-artifact-guard to check my image prompt for artifact risks."
+    "defaultPrompt": "Use GPT Image 2 Artifact Guard to onboard me, then preflight my image prompt without generating."
   }
 }

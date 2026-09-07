@@ -1,79 +1,98 @@
+![GPT Image 2 Artifact Guard: diagonal checker microtexture illustrated in a forest scene](assets/readme-banner-v6-microtexture.png)
+
 # GPT Image 2 Artifact Guard
 
-Wersja **0.1.0**, kandydat do testów. Skill do ChatGPT/Work i Codexa: kontrola promptu, ocena widocznych artefaktów oraz ograniczony proces naprawy. Ma ograniczać ryzyko niechcianych siatek, kafelkowania i fałszywego mikrodetalu przy zachowaniu zamierzonych faktur.
+**Version 1.0.0 · Ready to test**
 
-Nie jest filtrem obrazu ani poprawką modelu. Skuteczność wizualna tej wersji nie została jeszcze zmierzona. Nie gwarantuje braku artefaktów.
+A skill for ChatGPT / Work and Codex that checks image prompts, reviews unwanted artifacts and plans limited recovery attempts. It addresses fine triangular and diamond checker patterns, false microdetail and unnatural photographic people while protecting the detail you asked for.
 
-Repozytorium: [FrameCoreWorks/gpt-image-2-artifact-guard](https://github.com/FrameCoreWorks/gpt-image-2-artifact-guard), obecnie prywatne. Gotowe ZIP-y i sumy SHA-256 są dystrybuowane w [przedpremierowym wydaniu v0.1.0](https://github.com/FrameCoreWorks/gpt-image-2-artifact-guard/releases/tag/v0.1.0). Dostęp wymaga uprawnień do repozytorium.
+It creates **complete prompts with a task-specific anti-artifact layer**. For photographic people, that layer also covers believable skin, eyes, hair, pose, contact and lighting. It does not impose realism on intentional illustration or CGI.
 
-## Co jest w środku
+This is an instruction workflow, not an image filter or model patch. It cannot guarantee artifact-free output or “100% real” people. Visual mitigation effectiveness has not been measured.
 
-- [Główna instrukcja](skills/gpt-image-2-artifact-guard/SKILL.md): preflight, review, recovery i granice uprawnień.
-- [Źródła i ocena dowodów](skills/gpt-image-2-artifact-guard/references/evidence-register.md): dokumentacja OpenAI, relacje społeczności, konkurencyjne rozwiązania i niepotwierdzone hipotezy.
-- [Przykłady promptów](skills/gpt-image-2-artifact-guard/references/prompt-patterns.md), taksonomia, zasady kontroli oraz szablony przekazania pracy.
-- [Scenariusze testowe](tests/cases.json) i [protokół ewaluacji](tests/evaluation-protocol.md).
-- [Stan weryfikacji](docs/verification.md) oraz [decyzje projektowe](docs/design-decisions.md).
+## Install and get onboarded
 
-Instrukcje skilla są po angielsku dla przenośności. Skill odpowiada w języku użytkownika, także po polsku. Nie zawiera kodu wykonywanego podczas użycia, integracji API, MCP, telemetryki ani automatycznych uploadów. Skrypt Python w repo służy wyłącznie do lokalnego pakowania i nie wchodzi do pakietów instalacyjnych.
+Copy one complete setup prompt into the product where you want to use the skill:
 
-## Dwa pakiety, jedno źródło
-
-Gotowe paczki można pobrać z wydania GitHub. Po lokalnym zbudowaniu znajdują się w `dist/`; pliki generowane nie są przechowywane w historii źródeł Git:
-
-| Pakiet | Zawartość | Przeznaczenie |
+| Product | Copy this prompt | What it requests |
 | --- | --- | --- |
-| `gpt-image-2-artifact-guard-skill-0.1.0.zip` | Jeden katalog skilla z `SKILL.md`, metadanymi i zasobami | Próba bezpośredniego uploadu skilla w ChatGPT; instalacja samego skilla w Codex |
-| `gpt-image-2-artifact-guard-plugin-0.1.0.zip` | Katalog pluginu z `.codex-plugin/plugin.json` i tym samym skillem | Dystrybucja pluginowa, import tam, gdzie dany interfejs go obsługuje |
+| ChatGPT / Work | [Install and onboard in Work](prompts/install-chatgpt-work.txt) | Import one skill through the host's supported workflow, verify its status, then explain its use |
+| Codex | [Install and onboard in Codex](prompts/install-codex.txt) | Install one project-local skill from the pinned release, check discovery, then explain its use |
 
-Nie instaluj obu wariantów jednocześnie w tym samym zakresie, żeby uniknąć podwójnej aktywacji. Wersja pluginowa nie dodaje drugiego generatora.
+The prompts include version checks, existing-installation checks, a short introduction and three starter requests. They do not authorize image generation, global installation, paid providers or uploads.
 
-### ChatGPT / Work
+This repository is **private**. Use authorized GitHub access or attach the standalone skill ZIP from the [v1.0.0 release](https://github.com/FrameCoreWorks/gpt-image-2-artifact-guard/releases/tag/v1.0.0). Work may require a manual importer or administrator approval. Reading an attached ZIP is not a persistent install, and a prompt cannot bypass host permissions.
 
-[Dokumentacja OpenAI](https://help.openai.com/en/articles/20001066-skills-in-chatgpt) opisuje bezpośredni upload: **Plugins → Skills → Create → Upload from your computer**. Dostępność zależy od konta i ustawień workspace. Plugin nie jest obowiązkowy dla każdego uploadu skilla.
+[Step-by-step setup and troubleshooting](docs/getting-started.md) · [Copy-ready starter prompts](docs/starter-prompts.md) · [First-test checklist](docs/ready-to-test.md)
 
-Wybierz pakiet `skill` w interfejsie akceptującym archiwum skilla. Poczekaj na skan i sprawdź status. Ten konkretny ZIP nie był jeszcze importowany do Twojego konta. Jeżeli interfejs wymaga innego formatu, zapisz jego komunikat i dostosuj opakowanie do bieżących wymagań zamiast zmieniać logikę skilla. Nie obchodź skanu ani ograniczeń administratora.
+## Use it
 
-### Codex
+In ChatGPT, select the installed skill with `@`. In Codex, use `$gpt-image-2-artifact-guard`. [OpenAI invocation guidance](https://learn.chatgpt.com/docs/build-skills)
 
-Dla instalacji projektowej katalog `gpt-image-2-artifact-guard` zawierający `SKILL.md` umieszcza się w projektowym `.agents/skills/`, zgodnie z [dokumentacją skilli](https://learn.chatgpt.com/docs/build-skills). To instrukcja instalacji, a nie wykonana zmiana: ten projekt nie został skopiowany do globalnego ani kanonicznego katalogu skilli.
-
-Plugin można później podłączyć zgodnie z [dokumentacją pluginów](https://learn.chatgpt.com/docs/build-plugins). Nie utworzono wpisu marketplace ani instalacji globalnej. Wybierz jeden wariant dystrybucji. Jeżeli masz już kontrolę artefaktów w innym skillu obrazowym, wykonuj jeden wspólny preflight i nie doklejaj dwóch list zakazów.
-
-## Pierwsze użycie
-
-Poniższa składnia `$nazwa` dotyczy Codexa. W ChatGPT/Work wybierz zainstalowany skill w dostępnym interfejsie i podaj tę samą prośbę; nie zakładaj identycznego mechanizmu wywoływania na obu powierzchniach.
+Try this after selecting it:
 
 ```text
-Użyj $gpt-image-2-artifact-guard. Sprawdź ten prompt i zaproponuj minimalną
-poprawkę, bez generowania obrazu: Portret starszego mężczyzny w lnianej
-koszuli, naturalne zmarszczki, pory skóry, drobne ziarno filmowe,
-miękkie światło okienne, ostrość na oczach.
+Preflight only. Return a complete revised prompt, without generating:
+A photorealistic waist-up photograph of an adult repairing a bicycle
+in a daylight workshop. Preserve subtle natural skin, a believable
+grip and lighting shared by the person and room.
 ```
+
+Or attach an image and ask:
 
 ```text
-Użyj $gpt-image-2-artifact-guard do oceny załączonego obrazu.
-Podejrzewam ukośną siatkę na ścianie za produktem.
-Na razie tylko ocena i plan, bez edycji ani ponownej generacji.
+Review this image for tiny diagonal checker patterns and unnatural
+photographic people. Separate visible observations from uncertainty.
+Do not edit or generate.
 ```
 
-Do drugiego przykładu trzeba faktycznie dołączyć obraz. Bez niego skill może przeanalizować opis, ale nie może potwierdzić defektu.
+For an identity-sensitive edit comparison, attach both the original and edited images. The skill responds in your language; the distributed instructions and onboarding documentation are in English.
 
-## Rozwój i odtwarzalne paczki
+## Four modes
 
-W katalogu projektu, Python 3.9+ i tylko biblioteka standardowa:
+- **Onboarding:** explains invocation, features, expected outputs and limits without generating or changing installation state.
+- **Preflight:** preserves the brief and writes a complete prompt with only the relevant safeguards.
+- **Review:** inspects available images and separately assesses periodic texture, photographic plausibility and preservation.
+- **Recovery:** proposes one targeted intervention at a time. Retrying needs authorization, with a default ceiling of two additional attempts or your lower limit.
+
+Regular weave, gingham, droplets, grain and smooth skin are not automatically defects. A cleaner-looking image still fails if it loses required texture, changes the person or alters exact lettering. “Realistic” describes a visual target, not proof that an image is a photograph.
+
+## Release files
+
+| Asset | Contents |
+| --- | --- |
+| `gpt-image-2-artifact-guard-skill-1.0.0.zip` | One standalone skill folder with instructions, resources and metadata |
+| `gpt-image-2-artifact-guard-plugin-1.0.0.zip` | The identical skill plus a plugin manifest, for supported plugin workflows |
+| `INSTALL-CHATGPT-WORK-1.0.0.txt` | The copy-ready Work setup prompt |
+| `INSTALL-CODEX-1.0.0.txt` | The copy-ready Codex setup prompt |
+| `SHA256SUMS-1.0.0.txt` | SHA-256 checksums for all four assets above |
+
+Choose one package variant per scope. Neither adds a generator. No runtime scripts, API integration, MCP server, telemetry, third-party model or user reference images are bundled. This release is not listed in the public plugin directory.
+
+## Evidence and test status
+
+[Verification record](docs/verification.md) distinguishes structural checks, text-only smoke tests, file installation, live host activation and image-quality evaluation. Passing one does not prove the others. Real Work import, automatic discovery and a controlled visual benchmark remain test gates, not claimed results.
+
+The [evidence register](skills/gpt-image-2-artifact-guard/references/evidence-register.md) separates official guidance, firsthand community reports and untested workflow hypotheses. No universal cause or cure for these patterns has been established here. The banner deliberately illustrates microtexture; it is not a repair demonstration or benchmark result. [Banner provenance](docs/readme-banner-v6.md)
+
+## Repository map
+
+- [Core skill](skills/gpt-image-2-artifact-guard/SKILL.md)
+- [Pattern morphology](skills/gpt-image-2-artifact-guard/references/pattern-morphology.md) and [human photorealism](skills/gpt-image-2-artifact-guard/references/human-photorealism.md)
+- [Prompt patterns](skills/gpt-image-2-artifact-guard/references/prompt-patterns.md) and [review/recovery](skills/gpt-image-2-artifact-guard/references/qa-and-recovery.md)
+- [Design decisions](docs/design-decisions.md), [audit and v1 disposition](docs/skill-audit-2026-09-07.md), [changelog](CHANGELOG.md)
+- [Test cases](tests/cases.json) and [evaluation protocol](tests/evaluation-protocol.md)
+
+## Build and verify
+
+Python 3.9+ and the standard library only, from the repository root:
 
 ```sh
-python3 -m unittest discover -s tests -v
-python3 scripts/package.py
-python3 scripts/package.py --check
+python3 -B -m unittest discover -s tests -v
+python3 -B scripts/package.py
+python3 -B scripts/package.py --check
 ```
 
-Pierwszy build tworzy nowe ZIP-y. Powtórzenie z identyczną zawartością jest bezpieczne i niczego nie nadpisuje. Jeśli zmieniasz źródła już zbudowanej wersji, podnieś wersję manifestu zamiast nadpisywać wydany plik. `--check` porównuje paczki ze źródłami i sumami SHA-256.
+The build is deterministic and refuses to overwrite a differing artifact of the same version. Generated assets live in `dist/` and are distributed through GitHub releases, not committed as build files. Bump the version before changing an already released package.
 
-## Następny etap
-
-1. Sprawdzenie importu i aktywacji w docelowym ChatGPT/Work i Codex.
-2. Mały benchmark obrazów za osobną zgodą na generację i budżet, według protokołu testów.
-3. Decyzja o licencji i ewentualnym upublicznieniu repozytorium po testach.
-
-Autor w manifeście: `FrameCore Works`. Licencja publicznej dystrybucji nie została jeszcze wybrana. Utworzenie prywatnego repozytorium i wydania testowego nie oznacza udzielenia licencji open source. Nie dołączono cudzych modeli, kodu ani materiałów graficznych, nie zmieniono instalacji globalnych i niczego nie wysłano do Drive.
+Author: FrameCore Works. The repository remains private. No public-distribution license has been selected; this test release does not grant an open-source license.

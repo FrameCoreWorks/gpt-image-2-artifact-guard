@@ -1,0 +1,20 @@
+Install GPT Image 2 Artifact Guard v1.0.0 in the currently selected project, verify it, and give me a short onboarding. I authorize installing this single skill at project scope. Do not generate or edit images.
+
+Source: https://github.com/FrameCoreWorks/gpt-image-2-artifact-guard
+Required tag: v1.0.0
+Skill directory: skills/gpt-image-2-artifact-guard
+Alternative: an attached or explicitly supplied local gpt-image-2-artifact-guard-skill-1.0.0.zip.
+
+Read the applicable project instructions and resolve the actual project root. The destination is .agents/skills/gpt-image-2-artifact-guard inside that project, not a global installation.
+
+Use existing authorized repository access or the supplied local source. The repository is private. If access fails, ask for the standalone skill ZIP; do not ask me to paste a token or silently substitute main for v1.0.0. Inspect SKILL.md, version evidence, references and archive paths before installing. Record the resolved source commit and available checksum verification.
+
+Check the destination and other skill/plugin scopes visible to this session for an existing copy. Reuse a verified matching installation. If a different or locally modified copy exists, explain the collision and ask for a specific replacement or scope decision. Do not overwrite, delete or duplicate it blindly.
+
+Prefer the built-in skill-installer when available: read its instructions and use its supported --ref v1.0.0 and --dest options to target this project's .agents/skills directory. Install only skills/gpt-image-2-artifact-guard. If the helper is unavailable, copy only the inspected skill directory and its required resources to the resolved project destination using supported local file operations. Preserve the directory structure and existing files.
+
+Do not install the entire repository or both the skill and plugin. Do not add dependencies, change global configuration, inspect secrets, introduce telemetry, call image generators or provider APIs, publish files, or upload to external storage.
+
+Compare installed files with the selected source and verify reference links. Check whether $gpt-image-2-artifact-guard is available to this session, then load its SKILL.md and references/onboarding.md. File installation, host discovery and actual activation are separate checks. If pickup requires a new turn or session, say so and leave activation unverified until observed.
+
+Finish with the installation path, source/version and activation status, an onboarding explanation of no more than 150 words in my language, and three starter requests. Explain preflight, review, recovery, fine triangular/diamond patterns, photographic human realism and identity preservation. State that this is an instruction-and-review workflow with no guaranteed artifact prevention or photorealism.

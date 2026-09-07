@@ -7,6 +7,7 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import shutil
+import struct
 import tempfile
 import unittest
 from urllib.parse import unquote
@@ -28,8 +29,10 @@ class SourceTests(unittest.TestCase):
         skill = (SKILL / "SKILL.md").read_text()
         self.assertTrue(skill.startswith(f"---\nname: {PACKAGE.NAME}\n"))
         self.assertLess(len(skill.splitlines()), 500)
+        self.assertIn(f"Version {manifest['version']}. ", skill)
         for resource in ("risk-taxonomy", "prompt-patterns", "qa-and-recovery",
-                         "evidence-register", "workflow-integration"):
+                         "evidence-register", "workflow-integration", "onboarding",
+                         "pattern-morphology", "human-photorealism"):
             self.assertTrue((SKILL / "references" / f"{resource}.md").is_file())
         self.assertIn(f"${PACKAGE.NAME}", (SKILL / "agents/openai.yaml").read_text())
 
@@ -63,12 +66,21 @@ class SourceTests(unittest.TestCase):
             self.assertTrue(case["rubric"])
             self.assertIn(case["trigger"], {"yes", "no"})
 
+    def test_selected_readme_banner(self):
+        relative = "assets/readme-banner-v6-microtexture.png"
+        self.assertIn(f"]({relative})", (ROOT / "README.md").read_text())
+        data = (ROOT / relative).read_bytes()
+        self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
+        self.assertEqual(data[12:16], b"IHDR")
+        self.assertEqual(struct.unpack(">II", data[16:24]), (1983, 793))
+
 
 class PackageTests(unittest.TestCase):
     def test_deterministic_archives_and_checksums(self):
         first = PACKAGE.expected_artifacts()
         self.assertEqual(first, PACKAGE.expected_artifacts())
-        sums = next(value for key, value in first.items() if key.endswith(".txt"))
+        sums = next(value for key, value in first.items() if key.startswith("SHA256SUMS-"))
+        self.assertEqual(len(sums.decode().splitlines()), 4)
         for line in sums.decode().splitlines():
             digest, name = line.split("  ")
             self.assertEqual(hashlib.sha256(first[name]).hexdigest(), digest)
@@ -103,7 +115,49 @@ class PackageTests(unittest.TestCase):
         root = Path(directory)
         shutil.copytree(ROOT / "skills", root / "skills")
         shutil.copytree(ROOT / ".codex-plugin", root / ".codex-plugin")
+        shutil.copytree(ROOT / "prompts", root / "prompts")
         return root
+
+    def test_setup_prompts_are_exact_release_copies(self):
+        artifacts = PACKAGE.expected_artifacts()
+        version = json.loads((ROOT / ".codex-plugin/plugin.json").read_text())["version"]
+        for surface, source in (("CHATGPT-WORK", "install-chatgpt-work.txt"),
+                                ("CODEX", "install-codex.txt")):
+            self.assertEqual(artifacts[f"INSTALL-{surface}-{version}.txt"],
+                             (ROOT / "prompts" / source).read_bytes())
+
+    def test_standalone_roundtrip_to_isolated_project(self):
+        artifacts = PACKAGE.expected_artifacts()
+        payload = next(value for key, value in artifacts.items() if "-skill-" in key)
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / ".agents" / "skills"
+            with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+                archive.extractall(destination)
+            installed = destination / PACKAGE.NAME
+            expected = {p.relative_to(SKILL).as_posix(): p.read_bytes()
+                        for p in SKILL.rglob("*") if p.suffix in {".md", ".yaml"}}
+            actual = {p.relative_to(installed).as_posix(): p.read_bytes()
+                      for p in installed.rglob("*") if p.is_file()}
+            self.assertEqual(actual, expected)
+
+    def test_rejects_inconsistent_skill_version(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.fixture(directory)
+            path = root / ".codex-plugin/plugin.json"
+            manifest = json.loads(path.read_text())
+            manifest["version"] = "9.9.9"
+            path.write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError, "Skill version"):
+                PACKAGE.expected_artifacts(root)
+
+    def test_rejects_stale_setup_prompt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.fixture(directory)
+            path = root / "prompts/install-codex.txt"
+            version = json.loads((root / ".codex-plugin/plugin.json").read_text())["version"]
+            path.write_text(path.read_text().replace(version, "0.0.0"))
+            with self.assertRaisesRegex(ValueError, "Setup prompt version"):
+                PACKAGE.expected_artifacts(root)
 
     def test_build_check_and_no_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:

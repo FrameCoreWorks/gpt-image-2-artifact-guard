@@ -51,7 +51,9 @@ def expected_artifacts(root=ROOT):
         raise ValueError("Expected a numeric major.minor.patch version")
     skill_relative = Path("skills") / NAME
     skill_root = root / skill_relative
-    read_source(root, skill_relative / "SKILL.md")
+    skill_text = read_source(root, skill_relative / "SKILL.md").decode("utf-8")
+    if f"Version {version}. " not in skill_text:
+        raise ValueError("Skill version does not match the plugin manifest")
     skill_entries = {}
     for path in sorted(skill_root.rglob("*")):
         if path.is_symlink():
@@ -72,6 +74,13 @@ def expected_artifacts(root=ROOT):
         f"{NAME}-skill-{version}.zip": archive_bytes(skill_entries),
         f"{NAME}-plugin-{version}.zip": archive_bytes(plugin_entries),
     }
+    for surface, source in (("CHATGPT-WORK", "install-chatgpt-work.txt"),
+                            ("CODEX", "install-codex.txt")):
+        data = read_source(root, Path("prompts") / source)
+        versions = re.findall(r"(?<![0-9])[0-9]+\.[0-9]+\.[0-9]+", data.decode("utf-8"))
+        if not versions or set(versions) != {version}:
+            raise ValueError(f"Setup prompt version mismatch: {source}")
+        artifacts[f"INSTALL-{surface}-{version}.txt"] = data
     checksums = "".join(
         f"{hashlib.sha256(data).hexdigest()}  {name}\n"
         for name, data in sorted(artifacts.items())
@@ -107,7 +116,7 @@ def build_or_check(root=ROOT, check=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="Compare existing ZIPs to sources")
+    parser.add_argument("--check", action="store_true", help="Compare release files to sources")
     args = parser.parse_args()
     try:
         names = build_or_check(check=args.check)

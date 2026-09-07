@@ -4,7 +4,7 @@ These are original, unbenchmarked examples of the workflow, not proven magic phr
 
 ## Construction
 
-Write a complete prompt: subject and action; composition; style and light; surface-specific material behavior; exact visible text when applicable; protected details; one relevant local exclusion only if justified. Use as few sentences as the task allows. Do not repeat a long QA report in the prompt.
+Write a complete prompt: subject and action; composition; style and light; surface-specific material or photographic requirements; exact visible text when applicable; protected details; concise local exclusions only if justified. Use as few sentences as the task allows. Do not repeat a long QA report in the prompt.
 
 For an edit, identify the image by its role in the current call and describe the permitted region/change. Referencing an actually attached image is valid; referencing a missing image or conversation history is not. For an independent new image, omit attachment and history language entirely.
 
@@ -12,7 +12,7 @@ For an edit, identify the image by its role in the current call and describe the
 
 User intent: candid portrait with freckles, wrinkles, natural skin, and fine film grain. No observed output yet.
 
-> Create a candid close-up photograph of an adult woman with freckles and fine smile lines, wearing a cream linen shirt beside a window. Use soft side daylight, a quietly blurred interior, natural skin tones, and subtle fine film grain. Keep pores and freckles varied at a believable scale, with the linen weave confined to the shirt and following its folds.
+> Create a photorealistic candid close-up photograph of an adult woman with freckles and fine smile lines, wearing a cream linen shirt beside a window. Use soft side daylight, a quietly blurred interior, natural skin tones, and subtle fine film grain. Keep pores and freckles varied at a believable scale, with the linen weave confined to the shirt and following its folds.
 
 The positive material description is sufficient here. No invented defect, blanket smooth-skin instruction, or universal ban is needed.
 
@@ -20,7 +20,7 @@ The positive material description is sufficient here. No invented defect, blanke
 
 User intent: dense humid jungle; a prior inspected output had a diamond grid on leaves.
 
-> Create a wide photograph of a dense tropical jungle at dawn, with overlapping broad leaves, hanging vines, humid mist in the distance, and a narrow muddy path through the center. Preserve the richness and fine variety of the vegetation; leaf veins follow each leaf's form and nearer leaves remain distinct while distant foliage softens with atmospheric depth. Keep an artificial diamond-grid overlay off the leaf surfaces while retaining their natural veins and weathering.
+> Create a wide photograph of a dense tropical jungle at dawn, with overlapping broad leaves, hanging vines, humid mist in the distance, and a narrow muddy path through the center. Preserve the richness and fine variety of the vegetation; leaf veins follow each leaf's form and nearer leaves remain distinct while distant foliage softens with atmospheric depth. Avoid a repeating diagonal light-dark micro-lattice in the foliage while retaining its natural veins and weathering.
 
 Do not replace the jungle with a sparse garden. If complexity remains unresolved, discuss an optional compositional change rather than imposing it.
 
@@ -43,6 +43,28 @@ Do not append “no grids,” “no repeating patterns,” or “texture-free.�
 > Generate a vertical Polish exhibition poster with the exact headline “ŚWIATŁO I MATERIA” and the exact date “12–28 października”. Place the headline in large clear dark type above a photograph of a softly side-lit sandstone sculpture on a warm off-white background, with the date below. Preserve the sculpture's irregular fine stone grain and readable Polish diacritics; keep the type edges clean and the lettering separate from the photographed stone texture.
 
 For a requested raster output, generate the text in the image. Do not substitute an HTML/SVG poster or add a later text layer without the user's request. Verify the actual spelling and accents afterward.
+
+## Example F: photographic person without exaggerated pores
+
+User intent: a believable waist-up workshop photograph, not a macro skin study.
+
+> Create a photorealistic waist-up photograph of an adult man checking a bicycle handlebar in a daylight workshop. Show a believable grip and gaze directed at the bicycle. Keep skin detail subtle and varied at this framing, with coherent facial features and lighting shared by the person and room. Preserve a photographic appearance without beauty-filter smoothing.
+
+Do not add age, blemishes, extreme sharpness or grain as a universal realism trick. Review only features the crop and resolution can show.
+
+## Example G: clothing edit protects the person
+
+Precondition: the original photograph is actually attached and has been inspected.
+
+> Edit the attached photograph only to change the jacket to dark blue. Preserve the person's face, skin detail, age, expression, hair, body proportions, pose, lighting and background. Do not retouch the person.
+
+Compare the face and exposed skin against the source afterward. This is a preservation instruction, not a pixel-lock or identity guarantee.
+
+## Example H: studio photography stays studio photography
+
+> Create a photorealistic full-body fashion photograph of an adult model in a tailored gray suit against a light-gray studio background. Use a large softbox from camera left with a restrained fill and coherent floor contact shadows. Keep the requested makeup, natural proportions and a relaxed standing pose. Skin detail should remain believable at full-body framing; the suit's weave follows its folds. Preserve the polished studio style without turning the person into a plastic-looking render.
+
+Do not replace this with a candid phone snapshot. Polished lighting is not itself an artifact.
 
 ## Avoid these transformations
 

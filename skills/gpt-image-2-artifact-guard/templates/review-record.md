@@ -8,6 +8,8 @@
 - Region and evidence: observed / user-reported / hypothesis
 - Severity: minor / material / blocking / unknown
 - Protected detail and exact copy:
+- Relevant axes, assessed separately: periodic texture / photographic plausibility / preservation
+- Source comparison for identity-sensitive edits, if an actual source is available:
 - Proposed intervention and main changed variable:
 - Actual inputs and roles:
 - Retry authorization and remaining attempts:

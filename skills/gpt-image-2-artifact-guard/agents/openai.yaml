@@ -1,4 +1,4 @@
 interface:
   display_name: "GPT Image 2 Artifact Guard"
-  short_description: "Reduce texture artifacts while preserving intended detail"
-  default_prompt: "Use $gpt-image-2-artifact-guard to check my image prompt for artifact risks."
+  short_description: "Check image artifacts and photographic human realism"
+  default_prompt: "Use $gpt-image-2-artifact-guard to onboard me, then preflight my image prompt without generating."

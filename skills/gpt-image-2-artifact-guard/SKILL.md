@@ -1,9 +1,11 @@
 ---
 name: gpt-image-2-artifact-guard
-description: "Reduce GPT Image 2 artifact risks through prompt preflight, visible-image review, and bounded recovery. Use for unwanted tiling, diamond grids, cellular textures, false microdetail, edit drift, or image-context carryover in GPT Image 2 / ChatGPT Images workflows, including Polish requests about artefakty and tekstury. Do not activate for generic coding artifacts, intentional texture design, or unrelated image tasks without an artifact concern."
+description: "Preflight GPT Image 2 prompts and review image artifacts or unnatural photographic people. Use for triangular/diamond checker microtexture, false detail, plastic skin, CGI-looking faces, identity drift, bounded recovery, or onboarding to Artifact Guard. Also handles Polish artefakty and sztuczne postacie. Do not impose photorealism on intentional illustration or treat designed patterns or coding build artifacts as defects."
 ---
 
 # GPT Image 2 Artifact Guard
+
+Version 1.0.0. Ready to test; visual mitigation effectiveness remains unmeasured.
 
 Reduce avoidable risks while preserving the user's image. This is a prompt-and-review workflow, not an image filter, model patch, or guarantee. Respond in the user's language. Keep a simple case brief; expand only for complex edits or repeated failures. When the user explicitly requests only the prompt, output only the complete prompt and keep risk notes and QA checks internal, unless a missing essential input or unsupported requested control requires clarification.
 
@@ -19,7 +21,7 @@ Reduce avoidable risks while preserving the user's image. This is a prompt-and-r
 
 ## 1. Choose the mode and establish invariants
 
-Choose `preflight`, `review`, or `recovery` from the request. A combined task may run them in sequence, within the same authorization.
+Choose `onboarding`, `preflight`, `review`, or `recovery` from the request. For onboarding, read the onboarding reference and give a short introduction without generating an image or changing installation state. A combined task may run the relevant modes in sequence, within the same authorization.
 
 Extract the subject, intended style/materials, composition, exact visible text, essential identity/product details, use size, and attached-reference roles. Ask only when missing information would change an essential feature or make an edit unreliable. Otherwise state a small assumption and proceed.
 
@@ -29,7 +31,10 @@ Load references as needed:
 
 | Situation | Read |
 | --- | --- |
+| First use, help, invocation, or expected results | [Onboarding](references/onboarding.md) |
 | Any preflight or visual classification | [Risk taxonomy](references/risk-taxonomy.md) |
+| Repeated checkers, triangles, diamonds, or cellular microtexture | [Pattern morphology](references/pattern-morphology.md) |
+| Photographic people, plastic skin, CGI-looking faces, or identity-sensitive edits | [Human photorealism](references/human-photorealism.md) |
 | Writing or revising a generator prompt | [Prompt patterns](references/prompt-patterns.md) |
 | Inspecting results, planning edits or retries | [QA and recovery](references/qa-and-recovery.md) |
 | Explaining mechanisms, evidence, or current fixes | [Evidence register](references/evidence-register.md), then verify changing claims from primary sources |
@@ -40,7 +45,7 @@ Load references as needed:
 1. Separate protected detail from optional complexity. Texture, surreal subject matter, or multiple lighting regions alone are not defects.
 2. Resolve actual contradictions on the same object/region. Soft background atmosphere and a sharply focused subject can coexist.
 3. Describe the desired material behavior positively: where texture belongs, its scale, direction, and relation to form. Do not convert all surfaces to smooth plastic.
-4. If a specific unwanted pattern is observed or materially relevant, add at most one concise, surface-specific exclusion integrated into the prompt. This is a v0.1 editing default, not a proven optimum; do not erase necessary user constraints to meet a quota.
+4. Build a task-specific anti-artifact layer: positive surface or photographic requirements, protected details, and only the concise exclusions justified by this image. Integrate it into the complete prompt. Do not erase necessary user constraints to meet a word or exclusion quota.
 5. Preserve essential complexity. If reducing it would change the brief, present that as an optional variant requiring the user's choice, not as the default fix.
 6. If no useful change is justified, keep the prompt. Do not append a universal anti-artifact suffix, an exhaustive negative list, or unsupported controls such as `negative_prompt`, CFG, or seed.
 
@@ -53,6 +58,8 @@ Open the actual image with the host's supported viewer. If no image is available
 Assess intended display size and native-pixel regions where access permits. State whether you saw an original file, a resized preview, or a screenshot. Do not claim a 100% inspection from a downscaled preview. Never fabricate crops, coordinates, scores, or before/after comparisons.
 
 Use the taxonomy to distinguish unwanted patterns from intended weave, chessboards, halftones, pixel art, transparency-preview backgrounds, and resampling/compression effects. Identify the affected region and the visual evidence, with uncertainty when ambiguous. Pattern regularity alone is insufficient.
+
+When relevant, assess periodic texture, photographic plausibility, and preservation separately. A face can be grid-free yet waxy; a plausible face can still depict the wrong person. Apply human-photorealism checks only to the visible regions and intended style. A material failure in a required face or identity blocks acceptance even if the rest looks good. "100% real" is an appearance target, not a guarantee or proof of photographic origin.
 
 Report one status:
 

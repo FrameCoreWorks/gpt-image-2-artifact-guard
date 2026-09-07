@@ -1,10 +1,10 @@
 # Evaluation protocol
 
-Version 0.1 separates four kinds of evidence. Passing one does not imply passing the others.
+Version 1.0 separates four kinds of evidence. Passing one does not imply passing the others.
 
 ## 1. Structural checks
 
-Run the repository unit tests, the available skill/plugin validators, and the package comparison. Check local links, required resources, portable paths, identical skill contents in both ZIPs, checksums, deterministic outputs, no hidden runtime, and refusal to overwrite a differing archive. Record actual commands and results.
+Run the repository unit tests, the available skill/plugin validators, and the package comparison. Check local links, required resources, portable paths, identical skill contents in both ZIPs, checksums covering the ZIPs and setup prompts, version consistency, deterministic outputs, no hidden runtime, and refusal to overwrite a differing archive. Record actual commands and results. A byte-identical copy to an isolated project tests file installation only, not host discovery.
 
 These checks do not measure prompt behavior, import acceptance, or image quality.
 
@@ -42,10 +42,14 @@ For each scene:
 - Retain original output files, exact prompts, and observations. Do not cherry-pick only favorable images.
 - Inspect both native-pixel areas and intended use size. Randomize presentation labels for a human reviewer where feasible.
 - Judge artifact severity and protected-detail fidelity independently. A smoother output that loses required pores, weave, text, identity, or scene content fails preservation.
+- For photographic people, also judge plausibility independently of periodic texture. Check visible skin, eyes, hair, anatomy, gaze/contact and scene lighting at the actual framing. Do not reward added pores, wrinkles or grain by default. Preserve naturally smooth skin, makeup and intentional studio/cinematic style.
+- For identity-sensitive edits, compare original and edited face, apparent age, expression, body and pose even if the task changes only clothing. A plausible but different person fails preservation.
 
 Report counts and uncertainty, not a general cure rate. Separate cases that had no baseline defect from actual repair opportunities. Review disagreement should be recorded. The pilot is too small to establish universal behavior across subjects or future model updates.
 
 Then, only if useful, run a separately authorized local-edit experiment and a context-carryover experiment. Compare both target region and untouched areas; generative edits can introduce regressions.
+
+Before spending a generation budget, test review behavior on existing images whose use is authorized. Include fine diagonal microtexture, large tiling and counterexamples such as real weave, droplets, grain, glossy skin, smooth young skin and intentional CGI. Record original versus screenshot/preview access and reviewer uncertainty. Do not publish user attachments automatically. The repository banner intentionally illustrates a defect and is not a genuine failure example or an efficacy test.
 
 ## Release gates
 

@@ -22,6 +22,7 @@ These names are examples of optional integration, not dependencies or permission
 ## Output contract
 
 - Mode and inspection status.
+- Relevant assessment axes: periodic texture, photographic plausibility, and preservation. Omit irrelevant axes instead of inventing scores.
 - User intent and protected features.
 - Up to three relevant risks or observed defects, with evidence status.
 - Complete generator-ready prompt if requested, or a bounded recovery recommendation.
@@ -29,3 +30,7 @@ These names are examples of optional integration, not dependencies or permission
 - Acceptance checks and any remaining authorized attempts.
 
 Keep this contract short for simple cases. Do not force a research report on every invocation. Use a full review record only for repeated attempts or a complex handoff.
+
+For onboarding, use the shorter onboarding reference instead. Loading these instructions in a conversation does not prove persistent installation. A local file copy, host discovery, explicit activation, automatic matching, and visual effectiveness are separate outcomes.
+
+For iterative work, keep acceptance criteria, actual evidence, the failed region or requirement, one repair target, regression checks, and the stopping condition. The host or existing orchestrator owns approval and budget. Stop when the requested criteria pass in the inspected scope; otherwise return one bounded next action or the missing input, not an endless loop.

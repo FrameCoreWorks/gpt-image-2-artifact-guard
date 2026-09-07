@@ -7,6 +7,7 @@
 3. Review high-value regions: face/hands, product edges, exact text, important fabric/stone/skin, plain surfaces, and boundaries between materials.
 4. Distinguish observed defect from user report and hypothesis. Compare a suspected pattern across surfaces and zoom levels where possible.
 5. Record the smallest useful repair target and protected features. Use `uncertain` if intentional texture and artifact cannot be separated.
+6. For photographic people, record texture, human plausibility, and identity preservation independently. Do not accept a smoother face as a successful repair if it loses likeness, age, expression, or credible skin. For an edit outside the face, still compare the face and exposed skin with the source.
 
 ## Recovery ladder
 
@@ -16,6 +17,7 @@ This is a choice of interventions, not a mandatory sequence of generation calls.
 | --- | --- | --- | --- |
 | Prompt gives incompatible properties to one surface | Clarify which property belongs where | Scene, style, intended complexity | Cannot establish the cause of a prior output by itself |
 | Specific repeated pattern on one material | Positive material contract plus a narrow integrated exclusion | Real texture, object geometry | Prompt-only hypothesis until tested |
+| Person looks waxy or overprocessed | Clarify photographic appearance and plausible detail scale; for edits, narrow the permitted change using the source | Age, skin tone, features, pose, makeup if requested, lighting | More pores, grain or sharpness are not automatic improvements |
 | Local defect in an otherwise acceptable image | Targeted edit using the actual source; mask only if supported | Identity, text, edges, untouched surfaces | Edits may extend beyond the requested region |
 | Source itself carries heavy defects | Propose a clean reference or a new generation | Needed identity and composition anchors | Do not silently drop required references |
 | Unrequested material/object resembles earlier input | Audit references and offer a context-isolation trial | Complete scene contract, clean necessary references | No guarantee of a backend reset or cure |
@@ -45,6 +47,6 @@ Use [clean handoff](../templates/clean-handoff.md) if the user chooses a fresh c
 
 The handoff can record earlier observations as diagnostic notes outside the generator prompt. The generator prompt itself must stand alone. Neither a new chat nor text saying “fresh image” demonstrates that every internal service state has been reset.
 
-## Out of scope for v0.1
+## Out of scope
 
 No FFT-based automatic defect classifier, pixel filter, denoiser, upscaler, watermark removal, batch API runner, background monitor, or provider switch. Frequency patterns are not a sufficient classifier for real textures. External cleanup may sacrifice real detail and requires separate tool, privacy, and license review before any future integration.
